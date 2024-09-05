@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Good Night Scene</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background: linear-gradient(to bottom, #87CEEB, #F08080); /* Sunset sky */
+            transition: background 8s ease-in-out; /* Smooth background transition */
+        }
+        #scene {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .sun {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, yellow, orange);
+            border-radius: 50%;
+            bottom: 10%;
+            left: calc(50% - 75px);
+            animation: sunset 6s ease-in-out forwards;
+        }
+        .moon {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, white, #D3D3D3);
+            border-radius: 50%;
+            bottom: -20%;
+            left: calc(50% - 60px);
+            opacity: 0;
+            box-shadow: 0 0 50px rgba(255, 255, 255, 0.5); /* Moonlight effect */
+        }
+        .stars {
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+            background: transparent;
+            opacity: 0;
+        }
+        .star {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0;
+            animation: twinkle 1s infinite;
+        }
+        @keyframes sunset {
+            0% { bottom: 10%; }
+            100% { bottom: -200px; } /* Sun completely disappears */
+        }
+        @keyframes moonrise {
+            0% { bottom: -20%; opacity: 0; }
+            100% { bottom: 360px; opacity: 1; } /* Moon rises 60% higher */
+        }
+        @keyframes stars {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+        .message {
+            position: absolute;
+            font-family: 'Cursive', sans-serif;
+            font-size: 24px;
+            color: white; /* White text */
+            text-align: center;
+            width: 100%;
+            top: 50%;
+            opacity: 0;
+        }
+        @keyframes showMessage {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        .moonlight {
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.2), transparent 70%);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 6s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div id="scene">
+        <div class="sun"></div>
+        <div class="moon"></div>
+        <div class="moonlight"></div>
+        <div class="stars"></div>
+        <div class="message">Good Night Dear<br> Hanu🥰</div>
+    </div>
+
+    <script>
+        const starsContainer = document.querySelector('.stars');
+        const moon = document.querySelector('.moon');
+        const moonlight = document.querySelector('.moonlight');
+        const message = document.querySelector('.message');
+        const body = document.body;
+
+        // Create twinkling stars
+        for (let i = 0; i < 100; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            star.style.top = Math.random() * 100 + '%';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.animationDuration = Math.random() * 2 + 1 + 's';
+            starsContainer.appendChild(star);
+        }
+
+        // Trigger moonrise, stars, and background change after sunset completes
+        setTimeout(() => {
+            moon.style.animation = 'moonrise 6s ease-in-out forwards';
+            starsContainer.style.animation = 'stars 6s ease-in-out forwards';
+            message.style.animation = 'showMessage 6s ease-in-out forwards';
+            moonlight.style.opacity = 1; // Add moonlight effect
+            
+            // Stylish transition to night sky
+            setTimeout(() => {
+                body.style.background = 'radial-gradient(circle, #001133 20%, #000022 100%)'; // Stylish night sky gradient
+            }, 3000); // Dusk lasts for 3 seconds before changing to full night sky
+        }, 6000); // Moon appears after sunset (6 seconds)
+    </script>
+</body>
+</html>
